@@ -13,6 +13,14 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DECIMAL,
             allowNull: false
         },
+        SKU: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        Quantity: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
         created_at: {
             type: Sequelize.DATE,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
@@ -21,7 +29,13 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
+    }, {
+        timestamps: false
     });
+    Item.associate = function(models) {
+        Item.belongsTo(models.Category);
+    };
+
     Item.beforeUpdate((item) => {
         item.updated_at = new Date();
     });

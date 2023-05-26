@@ -17,6 +17,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
+    }, {
+        timestamps: false
     });
     Role.beforeUpdate((role) => {
         role.updated_at = new Date();

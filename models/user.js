@@ -5,24 +5,32 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
+        username: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
         firstname: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: true
         },
         lastname: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: true
         },
-        address: {
+        /*address: {
             type: Sequelize.STRING,
             allowNull: false
-        },
+        },*/
         email: {
             type: Sequelize.STRING,
+            allowNull: true
+        },
+        encryptedPassword: {
+            type: Sequelize.DataTypes.BLOB,
             allowNull: false
         },
-        password: {
-            type: Sequelize.STRING,
+        salt: {
+            type: Sequelize.DataTypes.BLOB,
             allowNull: false
         },
         created_at: {
@@ -33,9 +41,15 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
+    }, {
+        timestamps: false
     });
+    User.associate = function(models) {
+        User.belongsTo(models.Role);
+    }
+
     User.beforeUpdate((user) => {
         user.updated_at = new Date();
-    });
+    })
     return User;
 };

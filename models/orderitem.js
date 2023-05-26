@@ -16,6 +16,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
+    }, {
+        timestamps: false
     });
 
     Orderitem.associate = function(models) {
