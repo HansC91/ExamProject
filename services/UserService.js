@@ -12,13 +12,20 @@ class UserService {
                 lastname: lastname,
                 email: email,
                 salt: salt,
-                encryptedPassword: encryptedPassword
+                encryptedPassword: encryptedPassword,
+                RoleId: 2
             });
     }
 
     async getAll() {
         return this.User.findAll({
-            where: {}
+            where: { }
+        })
+    }
+
+    async getAllEmail(email) {
+        return this.User.findAll({
+            where: {email: email}
         })
     }
 

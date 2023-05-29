@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         Quantity: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: false,
         },
         created_at: {
             type: Sequelize.DATE,
