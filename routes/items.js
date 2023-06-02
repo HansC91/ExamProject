@@ -13,6 +13,9 @@ router.get('/items', async function(req, res, next) {
         required: true
       }
     });
+
+    items.sort((a,b) => a.CategoryId - b.CategoryId);
+
     const filteredItems = items.map(item => {
       return {
         id: item.id,
@@ -29,7 +32,7 @@ router.get('/items', async function(req, res, next) {
     res.status(200).json(filteredItems);
   } catch (err) {
     console.log(err);
-    res.status(500).send('Internal server error');
+    res.status(500).json('Internal server error');
   }
 });
 
