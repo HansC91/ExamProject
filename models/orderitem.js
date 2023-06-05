@@ -8,6 +8,10 @@ module.exports = (sequelize, Sequelize) => {
         quantity: {
             type: Sequelize.INTEGER,
         },
+        price: {
+            type: Sequelize.DECIMAL,
+            allowNull: false
+        },
         created_at: {
             type: Sequelize.DATE,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
@@ -22,9 +26,6 @@ module.exports = (sequelize, Sequelize) => {
 
     Orderitem.associate = function(models) {
         Orderitem.belongsTo(models.Order);
-    };
-
-    Orderitem.associate = function(models) {
         Orderitem.belongsTo(models.Item);
     }
 

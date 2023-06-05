@@ -17,10 +17,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: true
         },
-        /*address: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },*/
         email: {
             type: Sequelize.STRING,
             allowNull: true
@@ -46,6 +42,7 @@ module.exports = (sequelize, Sequelize) => {
     });
     User.associate = function(models) {
         User.belongsTo(models.Role);
+        User.hasOne(models.Cart)
     }
 
     User.beforeUpdate((user) => {

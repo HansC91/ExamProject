@@ -19,7 +19,8 @@ module.exports = (sequelize, Sequelize) => {
 
     Cart.associate = function(models) {
         Cart.belongsTo(models.User);
-    };
+        Cart.hasMany(models.Cartitem, { foreignKey: 'CartId' });
+    }
 
     Cart.beforeUpdate((cart) => {
         cart.updated_at = new Date();

@@ -5,8 +5,13 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
+        price: {
+            type: Sequelize.DECIMAL,
+            allowNull: false
+        },
         quantity: {
             type: Sequelize.INTEGER,
+            allowNull: false
         },
         created_at: {
             type: Sequelize.DATE,
@@ -21,10 +26,7 @@ module.exports = (sequelize, Sequelize) => {
     });
 
     Cartitem.associate = function(models) {
-        Cartitem.belongsTo(models.Cart);
-    };
-
-    Cartitem.associate = function(models) {
+        Cartitem.belongsTo(models.Cart, { foreignKey: 'CartId'});
         Cartitem.belongsTo(models.Item);
     }
 

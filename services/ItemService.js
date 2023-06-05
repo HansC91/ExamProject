@@ -33,6 +33,12 @@ class ItemService {
         });
     }
 
+    async getOneBySKU(SKU) {        
+        return await this.Item.findOne({
+            where: {SKU: SKU},
+        });
+    }
+
     async update(id, name, price, SKU, Quantity, CategoryId) {
         const model = this.Item;
         //so I can set to my timezone when updating.

@@ -30,9 +30,11 @@ class CategoryService {
     }
 
     async update(id, categoryname) {
+        var datetime = new Date();
         return this.Category.update(
             {
-                categoryname: categoryname
+                categoryname: categoryname,
+                updated_at: datetime.setHours(datetime.getHours()+2) 
             }, {
                 where: {
                   id: id,
@@ -46,30 +48,5 @@ class CategoryService {
         })
     }
 
-    /*
-    async update(id, name, price, SKU, Quantity, CategoryId) {
-        const model = this.Item;
-        //so I can set to my timezone when updating.
-        var datetime = new Date();
-        const result = await model.update({
-          name: name,
-          price: price,
-          SKU: SKU,
-          Quantity: Quantity,
-          CategoryId: CategoryId,
-          updated_at: datetime.setHours(datetime.getHours()+2)
-        }, {
-          where: {
-            id: id,
-          }
-        });
-        return result[0] === 1;
-      }
-
-    async deleteItem(id) {
-        return this.Item.destroy({
-            where: {id: id}
-        })
-    }*/
 }
 module.exports = CategoryService;

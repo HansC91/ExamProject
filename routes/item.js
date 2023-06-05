@@ -6,9 +6,9 @@ var ItemService = require("../services/ItemService.js")
 var itemService = new ItemService(db);
 var CategoryService = require("../services/CategoryService.js")
 var categoryService = new CategoryService(db);
-const authUser = require('../services/authMiddleware');
-const authAdmin = require('../services/authMiddleware');
-const idCheck = require('../services/authMiddleware');
+const authUser = require('../services/authUser')
+const authAdmin = require('../services/authAdmin')
+const idCheck = require('../services/idCheck')
 
 /* GET home page. */
 router.post('/', authAdmin, async function(req, res, next) {

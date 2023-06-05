@@ -25,12 +25,12 @@ router.post('/', async function(req, res, next) {
   const categoryPopulate = await db.Category.bulkCreate(categoryData);
   const itemName = data.map((item) => {
     const catId = categoryPopulate.find((category) => category.categoryname === item.category)
-    console.log(categoryPopulate);
     return {
       name: item.item_name,
       price: item.price,
       SKU: item.sku,
       Quantity: item.stock_quantity,
+      image_link: item.img_url,
       CategoryId: catId.id
     };
   });
@@ -49,7 +49,6 @@ router.post('/', async function(req, res, next) {
     }
   try {
     const adminRole = rolePopulate.find((role) => role.name === 'Admin')
-    console.log(rolePopulate);
     const adminName = {
       username: 'Admin',
       encryptedPassword: hashedPassword,
@@ -57,7 +56,7 @@ router.post('/', async function(req, res, next) {
       RoleId: adminRole.id
     };
     await db.User.create(adminName);
-    return res.json({ result: 'Admin user populated'});
+    return res.json({ result: 'Database populated'});
   } catch (error) {
     next(error);
   }

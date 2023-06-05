@@ -35,6 +35,12 @@ class UserService {
         });
     }
 
+    async getOneById(id) {
+        return await this.User.findOne({
+            where: {id: id}
+        })
+    }
+
     async deleteUser(id) {
         return this.User.destroy({
             where: {id: id}

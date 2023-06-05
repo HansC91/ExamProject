@@ -14,9 +14,16 @@ var itemsRouter = require('./routes/items');
 var itemRouter = require('./routes/item');
 var categoriesRouter = require('./routes/categories');
 var categoryRouter = require('./routes/category');
+var cartRouter = require('./routes/cart');
+var cartItemRouter = require('./routes/cart_item');
+var orderRouter = require('./routes/order');
+var ordersRouter = require('./routes/orders');
+var allOrdersRouter = require('./routes/allorders');
+var allCartsRouter = require('./routes/allcart')
 
 var app = express();
 
+var db = require('./models')
 db.sequelize.sync({ force: false})
 
 // view engine setup
@@ -36,6 +43,12 @@ app.use('/', itemsRouter);
 app.use('/item', itemRouter);
 app.use('/', categoriesRouter)
 app.use('/category', categoryRouter);
+app.use('/cart', cartRouter);
+app.use('/cart_item', cartItemRouter);
+app.use('/order', orderRouter);
+app.use('/orders', ordersRouter);
+app.use('/allorders', allOrdersRouter);
+app.use('/allcarts', allCartsRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

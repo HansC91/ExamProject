@@ -20,6 +20,10 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         timestamps: false
     });
+    Role.associate = function(models) {
+        Role.hasMany(models.User);
+    }
+
     Role.beforeUpdate((role) => {
         role.updated_at = new Date();
     });

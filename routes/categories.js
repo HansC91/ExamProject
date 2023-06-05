@@ -19,7 +19,7 @@ router.get('/categories', async function(req, res, next) {
     res.status(200).json(filteredCategories);
   } catch (err) {
     console.log(err);
-    res.status(500).send('Internal server error');
+    res.status(500).json('Internal server error');
   }
 });
 

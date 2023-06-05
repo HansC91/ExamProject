@@ -13,12 +13,17 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
+        status: {
+            type: Sequelize.STRING,
+            defaultValue: 'In process',
+        }
     }, {
         timestamps: false
     });
 
     Order.associate = function(models) {
         Order.belongsTo(models.User);
+        Order.hasMany(models.Orderitem);
     };
 
     Order.beforeUpdate((cart) => {
