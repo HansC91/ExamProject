@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 const db = require('../models');
 const authGuest = require('../services/authGuest');
-const { Op } = require('sequelize');
 
 /* GET home page. */
 router.get('/items', authGuest, async function(req, res, next) {
