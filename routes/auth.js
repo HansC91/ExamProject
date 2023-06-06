@@ -79,7 +79,7 @@ router.post('/signup', async (req, res, next) => {
   if (!firstname || !lastname) {
     return res.status(409).json({ Conflict: 'Please enter first- and lastname'});
   }
-  if (password.length < 6 ) {
+  if (!password || password.length < 6 ) {
     return res.status(409).json({ Conflict: "Must enter password of 6 characters or longer"});
   }
   var uniqueUsername = await userService.getOneByName(username);

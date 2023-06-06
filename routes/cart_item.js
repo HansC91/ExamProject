@@ -19,10 +19,13 @@ router.post('/', authUser, async function(req, res, next) {
   }); 
   const item = await db.Item.findOne({ where: { id: itemId} });
   if (!item) {
-    return res.status(404).json({notFound : "Item not found"});
+    return res.status(404).json({notFound : "There is no item with ItemId: " + itemId});
   }
   if (isNaN(quantity)) {
     return res.status(400).json({Error: "Quantity needs to be a number"})
+  }
+  if (item.Quantity < quantity) {
+    return res.status(400).json({Error: "There is not enough item in stock, you can order maximum: " + item.Quantity});
   }
   const itemInCart = await db.Cartitem.findOne({
      where: {

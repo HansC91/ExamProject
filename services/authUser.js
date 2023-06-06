@@ -4,7 +4,7 @@ const db = require('../models')
 async function authUser(req, res, next) {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
-      return res.status(400).json({ result: "JWT token not provided " });
+      return res.status(400).json({ result: "Only registered users/admin can use this endpoint" });
     }
   
     try {

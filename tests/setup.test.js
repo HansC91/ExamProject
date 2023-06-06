@@ -53,8 +53,8 @@ describe('POST /signup', () => {
 describe('POST /login', () => {
     test('logs in with previous testcreated user ', async () => {
         let Login = {
-            username: 'Admin',
-            password: 'P@ssword2023'
+            username: 'Johndoe',
+            password: 'johndoe'
         };
 
         const login = await request(app)
@@ -175,28 +175,29 @@ describe('POST /search', () => {
     })
 })
 
-describe('GET /allcarts, PUT /item/:id, PUT /category/:id tests (3x admin endpoint)', () => {
+describe('GET /allcarts, PUT /item/:id, PUT /category/:id tests (3x admin endpoint as user)', () => {
     beforeAll(async () => {
-        let adminLogin = {
-            username: 'Admin',
-            password: 'P@ssword2023'
+        let userLogin = {
+            username: 'Johndoe',
+            password: 'johndoe'
         };
 
         const login = await request(app)
             .post('/login')
-            .send(adminLogin);
+            .send(userLogin);
         expect(login.statusCode).toBe(200);
         expect(login.body).toHaveProperty('token');
 
-        adminToken = login.body.token;
+        userToken = login.body.token;
     })
-    test('GET /allcarts - admin', async () => {
+    test('GET /allcarts - admin route, user credentials', async () => {
         const response = await request(app)
             .get('/allcarts')
-            .set('Authorization', `Bearer ${adminToken}`);
-        expect(response.statusCode).toBe(200);
+            .set('Authorization', `Bearer ${userToken}`);
+        expect(response.statusCode).toBe(401);
+        expect(response.body).toEqual({ "message": "Only admins can use this endpoint"})
     })
-    test('PUT /item/:id - admin', async () => {
+    test('PUT /item/:id - admin route, user credentials', async () => {
         let itemUpdate = {
             name: "SofaNew",
             price: 800,
@@ -207,20 +208,20 @@ describe('GET /allcarts, PUT /item/:id, PUT /category/:id tests (3x admin endpoi
         const response = await request(app)
             .put('/item/1')
             .send( itemUpdate )
-            .set('Authorization', `Bearer ${adminToken}`);
-        expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual({ Success: "Item updated successfully"})
+            .set('Authorization', `Bearer ${userToken}`);
+        expect(response.statusCode).toBe(401);
+        expect(response.body).toEqual({ "message": "Only admins can use this endpoint"})
     })
-    test('PUT /category/:id - admin', async () => {
+    test('PUT /category/:id - admin route, user credentials', async () => {
         let categoryUpdate = {
             categoryname: "FurnitureNew"
         }
         const response = await request(app)
             .put('/category/1')
             .send( categoryUpdate )
-            .set('Authorization', `Bearer ${adminToken}`);
-        expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual({ Success: "Category updated successfully"})
+            .set('Authorization', `Bearer ${userToken}`);
+        expect(response.statusCode).toBe(401);
+        expect(response.body).toEqual({ "message": "Only admins can use this endpoint"})
     })
 })
 
