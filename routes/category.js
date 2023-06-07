@@ -26,11 +26,18 @@ router.post('/', authAdmin, async function(req, res, next) {
 
 router.put('/:id', authAdmin, idCheck, async function(req, res, next) {
   const categoryname = req.body.categoryname;
+  if (!categoryname || categoryname.length < 2 || categoryname === undefined ) {
+    return res.status(400).json({ message: 'Please provide a valid categoryname, minimum 2 characters'});
+  }
   const id = req.params.id
   const validcatid = await categoryService.findOne(id)
     if(!validcatid) {
       return res.status(404).json({ notFound: "that CategoryId does not exist"})
   }
+  const duplicateName = await categoryService.getOneByName(categoryname)
+    if (duplicateName) {
+      return res.status(400).json({ message: 'A category with that name allready exists'})
+    }
   const success = await categoryService.update(id, categoryname);
   if (!success) {
     return res.status(400).json({ Failure: "Failed to update category"});
@@ -40,10 +47,17 @@ router.put('/:id', authAdmin, idCheck, async function(req, res, next) {
 
 router.delete('/:id',authAdmin, idCheck, async function(req, res, next) {
   const id = Number(req.params.id);
+  const itemWithCatId = await db.Item.findAll({
+    where: { CategoryId: req.params.id}
+  })
+  console.log(itemWithCatId);
+  if (itemWithCatId.length > 0) {
+    return res.status(409).json({ Conflict: "There are items with this categoryid as FK, cannot delete category"});
+  }
   const success = await categoryService.deleteItem(id)
   if (!success) {
     return res.status(404).json({ notFound: "a category with that ID does not exist, or has allready been deleted"})
-  }
+  } 
   res.status(200).json({result: "Category successfully deleted"});
 })
 
