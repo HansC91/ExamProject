@@ -6,7 +6,6 @@ var ItemService = require("../services/ItemService.js")
 var itemService = new ItemService(db);
 var CategoryService = require("../services/CategoryService.js")
 var categoryService = new CategoryService(db);
-const authUser = require('../services/authUser')
 const authAdmin = require('../services/authAdmin')
 const idCheck = require('../services/idCheck')
 
@@ -40,6 +39,10 @@ router.post('/', authAdmin, async function(req, res, next) {
 
 router.put('/:id', authAdmin, idCheck, async function(req, res, next) {
   const id = req.params.id
+  const itemExists = await db.Item.findByPk(id)
+  if (!itemExists) {
+    return res.status(404).json({ notFound: 'An item with that ID does not exist'});
+  }
   const {name, price, SKU, Quantity, CategoryId} = req.body;
   if (!name || typeof price !== 'number' || !SKU || !Number.isInteger(Quantity) || !Number.isInteger(CategoryId)) {
     return res.status(409).json({ Conflict: 'Please provide an item with all valid fields'});
