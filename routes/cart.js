@@ -15,6 +15,9 @@ router.get('/', authUser, async function(req, res, next) {
       where: { UserId: userId }
     }]
   });
+  if (cartInfo == 0) {
+    return res.status(404).json({notFound: 'You have no items in cart'});
+  }
   res.status(200).json({Succesful: cartInfo});
 });
 

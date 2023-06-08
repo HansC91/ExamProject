@@ -13,7 +13,7 @@ router.post('/:id', authUser, async function(req, res, next) {
   const userId = req.user.id;
   try {
     const [order, created] = await db.Order.findOrCreate({
-      where: { UserId: userId },
+      where: { UserId: userId, status: 'In process' },
       defaults: { UserId: userId },
     });
     const cartItem = await db.Cartitem.findOne({
@@ -36,7 +36,7 @@ router.post('/:id', authUser, async function(req, res, next) {
       return res.status(400).json({ message: 'Item not found'});
     }
     if (item.Quantity < cartItem.quantity) {
-      return res.status(400).json({ message: 'Not enough stock quantity'})
+      return res.status(400).json({ message: `Not enough stock quantity, only ${item.Quantity} left`})
     }
     let user = await userService.getOneById(userId);
 

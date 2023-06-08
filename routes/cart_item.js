@@ -5,13 +5,14 @@ var CartService = require("../services/CategoryService.js")
 var cartService = new CartService(db);
 var jwt = require('jsonwebtoken')
 const authUser = require('../services/authUser');
+const idCheck = require('../services/idCheck')
 
 /* GET home page. */
 router.post('/', authUser, async function(req, res, next) {
   const userId = req.user.id;
   const { itemId, quantity } = req.body;
   if (!itemId || !quantity) {
-    return res.status(404).json({notFound : "Both itemId and quanity needs to be sent in the request body"});
+    return res.status(404).json({notFound : "Both itemId and quantity needs to be sent in the request body"});
   }
   const [cart, created] = await db.Cart.findOrCreate({
     where: { UserId: userId},
@@ -41,7 +42,7 @@ router.post('/', authUser, async function(req, res, next) {
 });
   if (itemInCart) {
     itemInCart.quantity += quantity;
-    if (itemInCart.Item.Quantity < quantity) {
+    if (itemInCart.Item.Quantity < itemInCart.quantity) {
       return res.status(400).json({ message: 'Not enough stock'})
     }
     await itemInCart.save();
@@ -56,7 +57,7 @@ router.post('/', authUser, async function(req, res, next) {
   res.status(200).json({"Cart": cartItem});
 });
 
-router.put('/:id', authUser, async function(req, res, next) {
+router.put('/:id', authUser, idCheck, async function(req, res, next) {
   const userId = req.user.id;
   const itemId = req.params.id;
   const newQuantity = req.body.quantity;

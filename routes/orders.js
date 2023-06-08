@@ -16,7 +16,8 @@ router.get('/', authUser, async function(req, res, next) {
           model: db.Item
         },
       }, {
-        model: db.User
+        model: db.User,
+        attributes: { exclude: ['encryptedPassword', 'salt'] }
       }],
     });
   } else {
@@ -29,6 +30,7 @@ router.get('/', authUser, async function(req, res, next) {
         },
       }, {
         model: db.User,
+        attributes: { exclude: ['encryptedPassword', 'salt'] }
       }],
     });
   }

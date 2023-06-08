@@ -7,7 +7,7 @@ const db = require('../models');
 router.get('/', authAdmin, async function(req, res, next) {
   try {
     const carts = await db.sequelize.query(`
-      SELECT carts.id AS cartId, cartitems.quantity AS quantity, items.name AS itemName, items.id AS itemId,
+      SELECT carts.id AS cartId, items.id AS itemId, items.name AS itemName, cartitems.quantity AS quantity,
       users.firstname, users.lastname
       FROM carts
       INNER JOIN users ON carts.UserId = users.id
