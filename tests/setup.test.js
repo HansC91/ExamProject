@@ -158,7 +158,7 @@ describe('POST /search', () => {
             .send({ itemName })
 
         expect(response.statusCode).toBe(200);
-        expect(response.body.message1).toHaveLength(3);
+        expect(response.body.searchResult).toHaveLength(3);
     })
 })
 
@@ -171,7 +171,7 @@ describe('POST /search', () => {
             .send({ itemName })
 
         expect(response.statusCode).toBe(200);
-        expect(response.body.message1).toHaveLength(1);
+        expect(response.body.searchResult).toHaveLength(1);
     })
 })
 

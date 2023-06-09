@@ -5,6 +5,10 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
+        total: {
+            type: Sequelize.DECIMAL,
+            defaultValue: 0
+        },
         created_at: {
             type: Sequelize.DATE,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
