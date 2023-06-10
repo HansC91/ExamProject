@@ -11,7 +11,7 @@ const idCheck = require('../services/idCheck')
 
 /* GET home page. */
 router.post('/', authAdmin, async function(req, res, next) {
-  const {name, price, SKU, Quantity, CategoryId} = req.body;
+  const {name, price, SKU, Quantity, image, CategoryId} = req.body;
   if (!name || typeof price !== 'number' || !SKU || !Number.isInteger(Quantity) || !Number.isInteger(CategoryId)) {
     return res.status(409).json({ Conflict: 'Please provide an item with all valid fields'});
   }
@@ -28,7 +28,7 @@ router.post('/', authAdmin, async function(req, res, next) {
             if(!catId) {
               return res.status(404).json({ notFound: 'There is no Category with ID: ' + CategoryId})
             }
-            itemService.create(name, price, SKU, Quantity, CategoryId);
+            itemService.create(name, price, SKU, Quantity, image, CategoryId);
             res.status(200).json({ Succesful: "Item succesfully created and added to database"})
           })
         }
@@ -43,15 +43,15 @@ router.put('/:id', authAdmin, idCheck, async function(req, res, next) {
   if (!itemExists) {
     return res.status(404).json({ notFound: 'An item with that ID does not exist'});
   }
-  const {name, price, SKU, Quantity, CategoryId} = req.body;
-  if (!name || typeof price !== 'number' || !SKU || !Number.isInteger(Quantity) || !Number.isInteger(CategoryId)) {
-    return res.status(409).json({ Conflict: 'Please provide an item with all valid fields'});
+  const {name, price, SKU, Quantity, image, CategoryId} = req.body;
+  if (typeof price !== 'number'  || !Number.isInteger(Quantity) || !Number.isInteger(CategoryId)) {
+    return res.status(409).json({ Conflict: 'Please provide an item with all valid fields (price, quantity and category must be a number'});
   }
   const validcatid = await categoryService.findOne(CategoryId)
     if(!validcatid) {
       return res.status(404).json({ notFound: "that CategoryId does not exist"})
   }
-  const success = await itemService.update(id, name, price, SKU, Quantity, CategoryId);
+  const success = await itemService.update(id, name, price, SKU, Quantity, image, CategoryId);
   if (!success) {
     return res.status(400).json({ badRequest: "Failed to update item"});
   }

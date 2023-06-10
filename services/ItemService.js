@@ -4,13 +4,14 @@ class ItemService {
         this.Item = db.Item;
     }
 
-    async create(name, price, SKU, Quantity, CategoryId) {
+    async create(name, price, SKU, Quantity, image_link, CategoryId) {
         return this.Item.create(
             {
                 name: name,
                 price: price,
                 SKU: SKU,
                 Quantity: Quantity,
+                image_link: image_link,
                 CategoryId: CategoryId
             });
     }
@@ -39,7 +40,7 @@ class ItemService {
         });
     }
 
-    async update(id, name, price, SKU, Quantity, CategoryId) {
+    async update(id, name, price, SKU, Quantity,image_link, CategoryId) {
         const model = this.Item;
         //so I can set to my timezone when updating.
         var datetime = new Date();
@@ -48,6 +49,7 @@ class ItemService {
           price: price,
           SKU: SKU,
           Quantity: Quantity,
+          image_link: image_link,
           CategoryId: CategoryId,
           updated_at: datetime.setHours(datetime.getHours()+2)
         }, {
