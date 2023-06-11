@@ -53,14 +53,14 @@ router.post('/:id', authUser, async function(req, res, next) {
     const totalPrice = (item.price * cartItem.quantity) * discount
     const transaction = await db.sequelize.transaction();
     try {
-      await db.Item.update({ Quantity: item.Quantity - cartItem.quantity },  { where: { id: itemId }, transaction });
+      await db.Item.update({ Quantity: item.Quantity - cartItem.quantity, updated_at: new Date() },  { where: { id: itemId }, transaction });
       const orderItem = await db.Orderitem.create({
         ItemId: itemId,
         OrderId: order.id,
         quantity: cartItem.quantity,
         price: totalPrice,
       }, {transaction });
-      await db.Order.update({ total: db.sequelize.literal(`total + ${totalPrice}`) }, { where: { id: order.id }, transaction });
+      await db.Order.update({ total: db.sequelize.literal(`total + ${totalPrice}`), updated_at: new Date() }, { where: { id: order.id }, transaction });
       await db.Cartitem.destroy({ where: { id: cartItem.id }, transaction});
       await transaction.commit();
       return res.status(200).json({ result: 'Order created successfully' });
@@ -87,7 +87,7 @@ router.put('/:id', authAdmin, async function(req, res, next) {
       return res.status(400).json({ message: 'Order not found'});
     }
 
-    await db.Order.update({ status }, { where: { id: orderId } });
+    await db.Order.update({ status, updated_at: new Date() }, { where: { id: orderId } });
     return res.status(200).json({ message: 'Order status successfully updated' });
   } catch (error) {
     console.error(error);

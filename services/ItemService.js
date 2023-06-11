@@ -42,7 +42,7 @@ class ItemService {
 
     async update(id, name, price, SKU, Quantity,image_link, CategoryId) {
         const model = this.Item;
-        //so I can set to my timezone when updating.
+        
         var datetime = new Date();
         const result = await model.update({
           name: name,
@@ -51,7 +51,7 @@ class ItemService {
           Quantity: Quantity,
           image_link: image_link,
           CategoryId: CategoryId,
-          updated_at: datetime.setHours(datetime.getHours()+2)
+          updated_at: datetime.setHours(datetime.getHours())
         }, {
           where: {
             id: id,

@@ -34,7 +34,7 @@ class CategoryService {
         return this.Category.update(
             {
                 categoryname: categoryname,
-                updated_at: datetime.setHours(datetime.getHours()+2) 
+                updated_at: datetime.setHours(datetime.getHours()) 
             }, {
                 where: {
                   id: id,
