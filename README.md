@@ -1,7 +1,7 @@
-STOCK SALES APPLICATION:
+## STOCK SALES APPLICATION:
 This is a stock sales application that allows users to browse and buy items from an item catalogue.
 
-HOW TO RUN:
+## HOW TO RUN:
 Download the code to your localmachine
 Open the code in your IDE (it was made on node v 18.13.0)
 install the dependencies with npm install.
@@ -10,11 +10,11 @@ run the application with npm start.
 
 to run the unittest: npm jest setup.test.js
 
-IMPORTANT INFO:
+## IMPORTANT INFO:
 DO NOT REGISTER A USER WITH THE NAME Johndoe, as this user is used for creation and testing in my unittests.
 
 
-Outside sources:
+## Outside sources:
 
 https://sebhastian.com/sequelize-findorcreate/?utm_content=cmp-true - findorcreate
 https://www.tabnine.com/code/javascript/functions/sequelize/like - index search.
@@ -25,7 +25,7 @@ Ive also used previous CA's to form my application, forexample models are worked
 Me and Lasse Stavland did signup for a mentor group, but only some discussion on interpertation of the details was shared between us. No code changed hands.
 
    
-.env file:
+## .env file:
 
 //START
 ADMIN_USERNAME = "admin"
@@ -39,4 +39,5 @@ TOKEN_SECRET = 'dfghj4567kjhg'
 //END
 
 
-LINK TO POSTMAN DOC: https://documenter.getpostman.com/view/25359340/2s93sacETt#cc26d102-870a-4cb1-99b6-51e2bdd771e6 
+## LINK TO POSTMAN DOC:
+ https://documenter.getpostman.com/view/25359340/2s93sacETt#cc26d102-870a-4cb1-99b6-51e2bdd771e6 
