@@ -8,7 +8,7 @@ install the dependencies with npm install.
 copy the .env file details below to a .env file in the root folder.
 run the application with npm start.
 
-to run the unittest: npm jest setup.test.js
+to run the unittest: npx jest setup.test.js
 
 ## IMPORTANT INFO:
 DO NOT REGISTER A USER WITH THE NAME Johndoe, as this user is used for creation and testing in my unittests.
